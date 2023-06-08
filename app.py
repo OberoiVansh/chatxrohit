@@ -39,8 +39,8 @@ def count_tokens(text: str) -> int:
     return len(tokenizer.encode(text))
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size = 512,
-    chunk_overlap  = 24,
+    chunk_size = 600,
+    chunk_overlap  = 200,
     length_function = count_tokens,
 )
 
@@ -55,12 +55,12 @@ db = FAISS.from_documents(chunks, embeddings)
 query = "where did you study?"
 docs = db.similarity_search(query)
 docs[0]
-chain = load_qa_chain(OpenAI(temperature=0), chain_type="stuff")
+chain = load_qa_chain(OpenAI(temperature=0.4), chain_type="stuff")
 query = "where did you study?"
 docs = db.similarity_search(query)
 chain.run(input_documents=docs, question=query)
 
-qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.1), db.as_retriever())
+qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.4), db.as_retriever())
 
 @app.route('/api/chatbot', methods=['POST'])
 def chatbot():
@@ -71,7 +71,7 @@ def chatbot():
     if query.lower() == 'exit':
         return jsonify({'response': "Thank you for using the State of the Union chatbot!"})
     
-    result = qa({"question": query+". Give short to the point answer.", "chat_history": history})
+    result = qa({"question": query+". Pretend you are answering a interview question. Give short precise answer.", "chat_history": history})
     # chat_history.append((query, result['answer']))
     
     return jsonify({'response': result['answer']})
