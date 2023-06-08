@@ -49,7 +49,7 @@ type(chunks[0])
 
 token_counts = [count_tokens(chunk.page_content) for chunk in chunks]
 df = pd.DataFrame({'Token Count': token_counts})
-df.hist(bins=40, )
+
 embeddings = OpenAIEmbeddings()
 db = FAISS.from_documents(chunks, embeddings)
 query = "where did you study?"
