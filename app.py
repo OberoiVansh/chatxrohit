@@ -39,8 +39,8 @@ def count_tokens(text: str) -> int:
     return len(tokenizer.encode(text))
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size = 600,
-    chunk_overlap  = 200,
+    chunk_size = 100,
+    chunk_overlap  = 25,
     length_function = count_tokens,
 )
 
