@@ -1,5 +1,6 @@
 #pip install langchain==0.0.150 pypdf pandas transformers openai faiss-cpu gdown flask flask_cors python-dotenv tiktoken
 import os
+
 import pandas as pd
 from transformers import GPT2TokenizerFast
 from langchain.text_splitter import RecursiveCharacterTextSplitter
